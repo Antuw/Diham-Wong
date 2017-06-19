@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html> 
+<html> 
+<head> 
+<meta name="keywords" content="天地图" charset="UTF-8"/> 
+<title>茶业精品园管理系统</title> 
+<script language="javascript" src="http://api.tianditu.com/js/maps.js"></script> 
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript"   src="fram.js"></script>
+</head> 
+<body onLoad="onLoad()" style="margin: 0px" > <!-- onresize="checkWidth()" -->
+	<div id="mapcontainer">
+        <div id="mapDiv" style="position:absolute;right:0;top:0;height: 100%;width: 100% "></div> 
+    
+        <div id="chart" style="width:550px;height:250px;overflow: hidden;border:solid 2px grey;position:relative ;display:none;">
+        <iframe src="charttemperature.html" id="chartiframe" scrolling="no" style="font-size:12px;background:#fff;padding:2px;line-height:10px;cursor:pointer;width: 650px;height: 300px;position:absolute;top:-50px;left: -10px;"></iframe> 
+        <div id="closediv" style="position: absolute;top:1px;right: 1px;z-index: 1000;">
+            <button id="closebtn" onclick="closeControl()">关闭</button>
+        </div>
+        </div>
+        <div id="name" >
+            <a onclick="slid()"><img id="openclose"src="tea/2.png"></a>
+             <span>求是</span>
+             <span>福海堂</span>
+             <span>御茶村</span>
+             <span>泰顺</span>
+             <span>碧霞春</span>
+        </div>
+    </div>
+    <div id="left">
+        <h2>摄像监控</h2>
+            <div id="video">
+                <select>
+                    <option selected>-请选择-</option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                </select> 
+                <p>*视频无法显示，请点击<a href="">这里</a>下载插件</p>
+            </div>
+            <h2>实时气象</h2>
+            <div id="table">
+                <table class="table1">
+                    <tr>
+                        <td>空气温度(℃)</td>
+                        <td>22.6</td>
+                    </tr>
+                    <tr>
+                        <td>空气湿度(%)</td>
+                        <td>53.9</td>
+                    </tr>
+                    <tr>
+                        <td>土壤温度(℃)</td>
+                        <td>24.5</td>
+                    </tr>
+                    <tr>
+                        <td>土壤湿度(%)</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>光照强度(klux)</td>
+                        <td>990</td>
+                    </tr>
+                    <tr>
+                        <td>风速(m/s)</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>风向(°)</td>
+                        <td>179</td>
+                    </tr>
+                    <tr>
+                        <td>雨量(mm/min)</td>
+                        <td>0</td>
+                    </tr>   
+                </table>
+            </div>
+    </div>
+    
+
+</body> 
+</html> 

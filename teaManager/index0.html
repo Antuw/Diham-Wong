@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html> 
+<html> 
+<head> 
+<meta name="keywords" content="天地图" charset="UTF-8"/> 
+<title>茶业精品园管理系统</title> 
+<script language="javascript" src="http://api.tianditu.com/js/maps.js"></script> 
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript"   src="js/ycc.js"></script>
+</head> 
+<body onLoad="onLoad()" style="margin: 0px" > <!-- onresize="checkWidth()" -->
+	<div id="mapcontainer">
+        <div id="mapDiv" style="position:absolute;right:0;top:0;height: 100%;width: 100% "></div> 
+       
+        <div id="chart" style="width:530px;height: 290px;border:2px solid green;background-color: #FFF; overflow: hidden;position:relative;display:none">
+            <iframe src="chartall0.html" id="chartiframe" scrolling="no" style="font-size:12px;background:#fff;padding:2px;line-height:10px;cursor:pointer;width: 650px;height: 300px;position:absolute;top:-10px;left: -10px;"></iframe> 
+             <div id="closediv" style="position: absolute;top:1px;right: 1px;z-index: 1000;">
+            <button id="closebtn" onclick="closeControl()">关闭</button>
+                  
+        </div>
+        </div>
+        <div id="name" >
+            <a onclick="slid()"><img id="openclose"src="tea/2.png"></a>
+             <span onclick="reachtea('index0.html')" style="background-color: #FFF">御茶村</span>
+             <span onclick="reachtea('index1.html')">福海堂</span>
+             <span onclick="reachtea('index2.html')">求是</span>
+             <span onclick="reachtea('index3.html')">泰顺</span>
+             <span onclick="reachtea('index4.html')">碧霞春</span>
+        </div>
+    </div>
+    <div id="left">
+        <h2>摄像监控</h2>
+            <div id="video" style="position: relative">
+                <select>
+                    <option selected>-请选择-</option>
+                    <option></option>
+                    <option></option>
+                    <option></option>
+                </select> 
+                <div style="width: 303px;height: 280px; position: absolute; border: 2px solid red;margin-top: 15px">
+                    <iframe src="video/ycc-video.html" scrolling="no" style="width: 360px;height: 300px;  "frameborder="0";></iframe>
+                    <div style="position: absolute; bottom: 10px;left:10px">
+                        <button>上</button>
+                        <button>下</button>
+                        <button>左</button>
+                        <button>右</button>
+                        <button>放大</button>
+                        <button>缩小</button>
+                    </div>
+                </div>
+                <p>*视频无法显示，请点击<a href="">这里</a>下载插件</p>
+            </div>
+            <h2>实时气象</h2>
+            <div id="table">
+                <table class="table1">
+                    <tr>
+                        <td>空气温度(℃)</td>
+                        <td>5.5</td>
+                    </tr>
+                    <tr>
+                        <td>空气湿度(%)</td>
+                        <td>98</td>
+                    </tr>
+                    <tr>
+                        <td>土壤温度(℃)</td>
+                        <td>5.5</td>
+                    </tr>
+                    <tr>
+                        <td>土壤湿度(%)</td>
+                        <td>75</td>
+                    </tr>
+                    <tr>
+                        <td>光照强度(klux)</td>
+                        <td>990</td>
+                    </tr>
+                    <tr>
+                        <td>风速(m/s)</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>风向(°)</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>雨量(mm/min)</td>
+                        <td>0</td>
+                    </tr>   
+                </table>
+            </div>
+    </div>
+    
+
+</body> 
+</html> 

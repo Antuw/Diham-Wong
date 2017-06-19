@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chartall</title>
+	<style>
+		#chartContainer{width:530px;height: 290px;border:0;overflow: hidden;position:relative ;}
+		#bottom{width:500px;height:30px;position: absolute;bottom:3px;left:20px; margin-left: 30px;}
+		#bottom.button{ margin:0,10px;}
+	</style>
+	
+</head>
+<body>
+	<div id="chartContainer">
+		<iframe src="charttemperature.html" id="chartiframe" scrolling="no" style="font-size:12px;background:#fff;padding:2px;line-height:10px;width: 600px;height: 300px;position:absolute;top:-50px;left: -10px;"></iframe> 
+		<div id="bottom">
+			<button id="btnchart0" onclick="change('charts1/chart0.html')">大气温度</button>
+			<button id="btnchart1" onclick="change('charts1/chart1.html')">空气湿度</button>
+			<button id="btnchart2" onclick="change('charts1/chart2.html')">土壤温度</button>
+			<button id="btnchart3" onclick="change('charts1/chart3.html')">土壤湿度</button>
+			<button id="btnchart4" onclick="change('charts1/chart4.html')">降雨</button>
+			
+		</div>		
+	</div>
+	<script>
+	     function change(url){
+	     	document.getElementById("chartiframe").src=url;
+	     }
+	</script>
+</body>
+</html>

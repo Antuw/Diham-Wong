@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Teamanage</title>
+    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css"/>
+    <style>
+        html, body {
+            width: 100%;  height: 100%;  margin: 0;  padding: 0;
+            overflow-y: hidden;  background-color: #DBD7D0;
+        }
+        #map{
+            width: 100%;  height: 100%;  margin: 0;  padding: 0;
+            overflow-y: hidden;  background-color: #DBD7D0;  position:relative;
+        }
+        #HomeButton{position:absolute;top: 100px;left:20px;z-index:50;}
+        #OverviewDiv{position: absolute;bottom: 10px;right:20px;z-index: 51;border: 1px solid #ff0000;
+            width: 300px; height: 200px;background-color: #DBD7D0;}
+        #LocateButton {
+            position: absolute;
+            top: 150px;
+            left: 20px;
+            z-index: 59;
+        }
+        .visible {
+            display: block;
+        }
+        .unvisible {
+            display: none;
+        }
+    </style>
+    <script src='http://js.arcgis.com/3.9/'></script>
+    <script>
+        require(["esri/map",
+                    'dojo/on',
+                    'dojo/dom',
+                    "esri/dijit/HomeButton",
+                    "esri/dijit/Scalebar",
+                    'esri/layers/ArcGISTiledMapServiceLayer',
+                    'esri/layers/ArcGISDynamicMapServiceLayer',
+                    "esri/layers/FeatureLayer",
+                    "esri/dijit/OverviewMap",
+                    "esri/geometry/Point",
+                    "esri/SpatialReference",
+                    "esri/symbols/SimpleMarkerSymbol",
+                    "esri/symbols/SimpleLineSymbol",
+                    "esri/symbols/SimpleFillSymbol",
+                    "esri/renderers/SimpleRenderer",
+                    "esri/graphic",
+                    "esri/lang",
+                    "esri/layers/GraphicsLayer",
+                    "esri/InfoTemplate",
+                    "esri/Color",
+                    "esri/dijit/LocateButton",
+                    "dojo/dom-style",
+                    "dijit/TooltipDialog",
+                    "dijit/popup",
+                    "dojo/domReady!"],
+                function (Map, on, dom, HomeButton,Scalebar,
+                          ArcGISTiledMapServiceLayer,ArcGISDynamicMapServiceLayer,FeatureLayer,
+                          OverviewMap,Point,SpatialReference,
+                          SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,SimpleRenderer,
+                          Graphic, esriLang,GraphicsLayer,infoTemplate,Color,LocateButton,
+                          domStyle,TooltipDialog,dijitPopup) {
+                    var ChinaColorstreetsmapurl = "http://cache1.arcgisonline.cn/ArcGIS/rest/services/ChinaOnlineStreetColor/MapServer";
+                    var World_Imageryurl="http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer";
+                    var Placeurl="http://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer"
+                    var teamapurl="http://10.75.68.128/arcgis/rest/services/tea_Dynamic/MapServer";
+                    var teafeatureurl="http://10.75.68.128/arcgis/rest/services/tea_Dynamic/MapServer/0"
+                    var map = new Map("map", {
+                        zoom:15,//放大级别
+                        center:[120.696586,29.937416],//中心点
+                        sliderStyle:"small",//滑块类型'small'或者'large'
+                        sliderPosition: "top-left",//滑块的位置
+                        logo:false//去掉logo
+                    });
+                    var ChinaColorstreetsmap = new ArcGISTiledMapServiceLayer(ChinaColorstreetsmapurl, {
+                        id: 'ChinaColorstreetsmaplayer'
+                    });
+//                    map.addLayer(ChinaColorstreetsmap);
+                    //加载切片底图
+                    var image = new ArcGISTiledMapServiceLayer(World_Imageryurl);
+                    map.addLayer(image);
+//                    var place = new ArcGISTiledMapServiceLayer(Placeurl);
+//                    map.addLayer(place);
+                    //加载动态底图
+                    var teamap = new ArcGISDynamicMapServiceLayer(teamapurl,{
+                        id:'teaMap',//给该图层赋id值，可以被dom.byid使用。
+                        'showAttribution':false,//是否显示属性（未发现有什么用）
+                        'opacity':0.3//图层透明度
+                    });
+                    map.addLayer(teamap);
+                    //home键
+                    var home=new HomeButton({
+                        map:map
+                    },"HomeButton");
+                    home.startup();
+                    //比例尺
+                    var scalebar=new Scalebar({
+                        attachTo:"bottom-left",//比例尺位置
+                        scalebarUnit: "metric",//比例尺单位
+                        scalebarStyle:"ruler"//比例尺样式
+                    });
+                    var overview=new OverviewMap({
+                        map:map,
+                        visible:true,
+                        expandFactor:4,//鹰眼图与大图的放大级别差距
+                        baseLayer:ChinaColorstreetsmap,//选择鹰眼图展示的图层，默认为第一个添加的图层
+                        maximizeButton:true
+                    },'OverviewDiv');
+                    overview.startup();
+                    //定位
+                    geoLocate = new LocateButton({
+                        map: map
+                    }, "LocateButton");
+                    geoLocate.startup();
+                    //在地图中添加点
+//                    var point=new Point([120.696586,29.937416],new SpatialReference({wkid:4326}));
+//                    map.graphics.add(graphic);
+                    //1，new一个point
+                    var point=new Point( {"x": 120.696586, "y": 29.937416, "spatialReference": {"wkid": 4326 } });
+                    //2 设置属性
+                    var attribute={
+                        address:"绍兴市",
+                        company:'御茶村',
+                        boss:"张健"
+                    };
+                    //3 设置弹出窗口的内容
+                    var infotemp=new infoTemplate(
+                            "茶厂信息",//弹出窗口的标题
+                            //弹出窗口的内容
+                            "公司名称：${company}<br/>茶厂地址：${address}<br/>公司负责人：${boss}"
+                    );
+                    //4 new一个点的样式
+                    var symbol = new SimpleMarkerSymbol (SimpleMarkerSymbol.STYLE_CIRCLE, 12, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([210, 105, 30, 0.5]), 8), new Color([210, 105, 30, 0.9]));
+                    //5 new一个graphic，并将点，样式，属性，弹出窗口作为参数传入
+                    var graphic = new Graphic(point, symbol,attribute,infotemp);
+                    //6 new一个graphicsLayer，并将graphic用add方法传入
+                    var graphicsLayer=new GraphicsLayer();
+                    graphicsLayer.add(graphic);
+                    //7 将graphicsLayer 添加到map中
+                    map.addLayer(graphicsLayer);
+
+                    //添加要素图层
+                    var teafeature=new FeatureLayer(teafeatureurl,{
+                        mode:FeatureLayer.MODE_SNAPSHOT,
+                        infoTemplate: new infoTemplate(
+                                "详细信息",
+                                "田块编号：${land_ID}<br/>" +
+                                "茶叶种植类型：${type}<br/>" +
+                                "施药：${pesticide}<br/>" +
+                                "施肥：${manure}<br/>" +
+                                "管理人员：${admin}<br/>"+
+                                "电话：${Telephone}<br/>"),
+                        outFields:["Id","land_ID","type","pesticide","manure","admin","Telephone"]
+                    });
+                    //teafeature.setDefinitionExpression("type='longjing'")//设置显示区域
+                    var featureSymbole=new SimpleFillSymbol(
+                            SimpleFillSymbol.STYLE_SOLID,
+                            new SimpleLineSymbol(
+                                    SimpleLineSymbol.STYLE_SOLID,
+                                    new Color([255,255,255,0.35]),1
+                            ),
+                            new Color([125,125,125,0.5])
+                    );
+                    teafeature.setRenderer(new SimpleRenderer(featureSymbole));
+                    map.addLayer(teafeature);
+
+                });
+    </script>
+</head>
+<body class="claro">
+<div id="map" >
+    <div id="OverviewDiv"></div>
+    <div id="HomeButton"></div>
+    <div id="LocateButton"></div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+
+	body,ul,p,h1,h2,h3,h4,dl,dd,form,input,textarea,select,th,td{padding: 0;margin: 0;font-family: '宋体';}
+	.mapDiv{position:absolute;height: 100%;width: 100%}
+    #name{width: 30px; height: 100%;background:#EBE1C6;}
+    #name p{background: url(tea/arrow.png) no-repeat;}
+    #name span{display: block;height:60px;width: 30px;font-size: 20px;background:#E8EFF9;  padding-top: 10px;padding-bottom: 10px;margin-top: 10px;margin-bottom:10px; text-align: center;cursor:pointer;}
+    #name a{cursor:pointer;}
+    #left{width: 315px;height: 100%;position:absolute;left:0;top:0;display: none;}
+        h2{width: 315px;background: url(tea/bg3.png) repeat-x;height: 30px;line-height: 30px;text-align: center;font-family: '微软雅黑';font-size: 16px;font-weight: normal;color: #fff;}
+    #video{width: 315px; height: 400px; position: relative;}
+    #video p{position: absolute;left: 15px;bottom: 10px;}
+    #video a:hover{text-decoration: underline;color: red;}
+    #table{padding-left: 5px;padding-top: 5px;}
+    #table td{border:1px solid black;height: 30px;width: 150px;text-align: center;}
+    #table table{border-collapse: collapse;}

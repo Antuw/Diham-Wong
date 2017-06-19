@@ -1,0 +1,65 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<title>动态信息窗口</title> 
+  <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
+  <script>
+    var time=new Date();
+    var h=time.getHours();
+    var hArr=new Array(24);
+    for (var i = 0; i < hArr.length; i++) { //获取当前时刻之前的24小时数组
+        hArr[i]=(h++)%24;
+        hArr[i].toString();
+    }      
+    var datafull=[91,91,91,92,93,93,93,94,74,63,58,56,62,68,70,67,65,63,63,59,60,60,59,57]//1-24小时的数据
+    var datanow=new Array(24);
+    for(var j=0 ;j<24;j++){
+        var t=parseInt(hArr[j]);
+        datanow[j]=datafull[t];
+    }
+    $(function () {
+    $('#container').highcharts({
+        title: {
+            text: 'Air Humidity',
+            x: -20 //center
+        },
+        xAxis: {
+            categories:hArr
+        },
+        yAxis: {
+            title: {
+                text: 'Air Humidity (%)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: '%'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: '湿度',
+            data: datanow
+        }]
+    });
+});
+		alert($('#container').highcharts.series.name)		
+  </script>
+</head>
+<body>
+  	 	<div id="container" style="width:600px;height:300px;position:absolute;top=-5px;"></div>
+  	 
+</body>
+</html>
+
